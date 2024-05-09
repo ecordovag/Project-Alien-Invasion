@@ -2,6 +2,7 @@ import sys
 
 import pygame
 
+from random import randint
 from settings import Settings
 from star import Star
 
@@ -38,20 +39,20 @@ class Constelation:
 
     def _create_fleet(self):
         """Create the constelation."""
-        # Create an alien and keep adding aliens until there's no room left.
-        # Spacing between aliens is one alien width and one alien height.
+        # Create a star and keep adding stars until there's no room left.
+        # Spacing between stars is random.
         star = Star(self)
         star_width, star_height = star.rect.size
 
         current_x, current_y = star_width, star_height
-        while current_y < (self.settings.screen_height - 3 * star_height):
+        while current_y < (self.settings.screen_height - 2 * star_height):
             while current_x < (self.settings.screen_width - 2 * star_width):
-                self._create_star(current_x, current_y)
-                current_x += 2 * star_width
+                self._create_star(current_x+randint(-25,25), current_y+randint(-25,25))
+                current_x += randint(5,10) * star_width
 
             # Finished a row; reset x value, and increment y value.
             current_x = star_width
-            current_y += 2 * star_height
+            current_y += randint(45,50) + star_height
     
     def _create_star(self, x_position, y_position):
             """Create a star and place it in the sky."""
