@@ -20,8 +20,15 @@ class Drop(Sprite):
 
         # Store the alien's exact vertical position.
         self.y = float(self.rect.y)
+
+    def check_edges(self):
+        """Return True if drop is at edge of screen."""
+        screen_rect = self.screen.get_rect()
+        return self.rect.bottom >= screen_rect.bottom
     
     def update(self):
-        """Move the drop down."""
+        """Move a grid of drops down."""
         self.y += self.settings.drop_speed
         self.rect.y = self.y
+    
+  

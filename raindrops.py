@@ -19,6 +19,7 @@ class Raindrops:
         pygame.display.set_caption("Raindrops")
 
         self.drops = pygame.sprite.Group()
+        self.row_drops = pygame.sprite.Group()
 
         self._create_raindrops()
 
@@ -44,7 +45,7 @@ class Raindrops:
         drop_width, drop_height = drop.rect.size
 
         current_x, current_y = drop_width, drop_height
-        while current_y < (self.settings.screen_height - 3 * drop_height):
+        while current_y < (self.settings.screen_height - 5 * drop_height):
             while current_x < (self.settings.screen_width - 2 * drop_width):
                 self._create_drop(current_x, current_y)
                 current_x += 2 * drop_width
@@ -53,6 +54,16 @@ class Raindrops:
             current_x = drop_width
             current_y += 2 * drop_height
     
+    def _create_row_raindrops(self):
+        """ Create a row of raindrops."""
+        drop = Drop(self)
+        drop_width, drop_height = drop.rect.size
+
+        current_x, current_y = drop_width, drop_height
+        while current_x < (self.settings.screen_width - 2 * drop_width):
+            self._create_drop(current_x, current_y)
+            current_x += 2 * drop_width 
+        
     def _create_drop(self, x_position, y_position):
             """Create a drop and place it in the raindrops."""
             new_drop = Drop(self)
@@ -60,9 +71,17 @@ class Raindrops:
             new_drop.rect.y = y_position
             new_drop.rect.x = x_position
             self.drops.add(new_drop)
-    
+
+    def _check_fleet_edges(self):
+        """Respond appropriately if any drops have reached an edge."""
+        for drop in self.drops.sprites():
+            if drop.check_edges():
+                self._create_row_raindrops()
+                break
+      
     def _update_drops(self):
-        """Update the positions of all drops in the raindrops."""
+        """Check if the fleet is at an edge, then update positions."""
+        self._check_fleet_edges()
         self.drops.update()
 
     def _update_screen(self):
