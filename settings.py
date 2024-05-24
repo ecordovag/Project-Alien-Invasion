@@ -9,6 +9,6 @@ class Settings:
         self.bg_color = (255, 255, 255)
 
         # Drop settings
-        self.drop_speed = 1.0
+        self.drop_speed = 5.0
        
       
