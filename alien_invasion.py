@@ -81,21 +81,29 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
     
     def _update_aliens(self):
-        """Update the positions of all aliens in the fleet."""
-        self.aliens.update()
+          """Update the positions of all aliens in the fleet."""
+          self.aliens.update()
 
     def _create_fleet(self):
-            """Create the fleet of aliens."""
-            # Make an alien.
-            alien = Alien(self)
-            # alien_width = alien.rect.width
+        """Create the fleet of aliens."""
+        # Make an alien.
+        # Create an alien and keep adding aliens until there's no room left.
+        # Spacing between aliens is one alien width and one alien height.
+        alien = Alien(self)
+        alien_height = alien.rect.height
 
-            # current_x = 1200 - alien_width
-            # while current_x < (self.settings.screen_width - 2 * alien_width):
-            #     new_alien = Alien(self)
-            #     new_alien.x = current_x
-            #     new_alien.rect.x = current_x
-            self.aliens.add(alien)
+        current_y = alien_height
+        while current_y < (self.settings.screen_height - 2 * alien_height):
+            self._create_alien(current_y)
+            current_y += 2 * alien_height
+        
+        
+    def _create_alien(self, y_position):
+        """Create an alien and place it in the fleet."""
+        new_alien = Alien(self)
+        new_alien.y = y_position
+        new_alien.rect.y = y_position
+        self.aliens.add(new_alien)  
         
     def _update_screen(self):
         """Update changes ont he screen, and flip to the new screen"""

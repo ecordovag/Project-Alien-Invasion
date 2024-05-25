@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
-from random import randint
+
 
 
 class Alien(Sprite):
@@ -17,13 +17,15 @@ class Alien(Sprite):
         self.rect = self.image.get_rect()
 
         # Start each new alien near the right of the screen at different heights.
-        self.rect.x = self.settings.screen_width - self.rect.width
-        self.rect.y = randint(self.rect.height, self.settings.screen_height - 2 * self.rect.height)
+        self.rect.x = self.settings.screen_width - 1.5 * self.rect.width
+        self.rect.y = self.rect.height
 
         # Store the alien's exact horizontal position.
         self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
     
     def update(self):
-        """Move the alien to the right."""
+        """Move the alien to the left."""
         self.x -= self.settings.alien_speed
         self.rect.x = self.x
+        self.rect.y = self.y
